@@ -1,20 +1,20 @@
 
 % Solution biaisée du mod�le appliqué à
 % l'image polarimétrique d'entrée I
-fS_hat=matfile(strcat('../../data_out/synthetic/',model,'/S_hat_mu_bi_',sprintf('%.1f',mu_bi),'.mat'));
+fS_hat=matfile(strcat('../../data_out/',model,'/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi),'.mat'));
 S_hat=fS_hat.S_hat;
-S0_KKT_coupled_regularization=S_hat(:,:,1);
-S1_KKT_coupled_regularization=S_hat(:,:,2);
-S2_KKT_coupled_regularization=S_hat(:,:,3);
+S0=S_hat(:,:,1);
+S1=S_hat(:,:,2);
+S2=S_hat(:,:,3);
 
 if refitting == true
-    % Solution débiaisée du mod�le appliqué à
+    % Solution débiaisée du mod�le appliqué �
     % l'image polarimétrique d'entrée I
-    fS_til=matfile(strcat('../../data_out/synthetic/',model,'/S_til_mu_bi_',sprintf('%.1f',mu_bi),'_mu_re_',sprintf('%.1f',mu_re),'.mat'));
+    fS_til=matfile(strcat('../../data_out/',model,'/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi),'_mu_re_',sprintf('%.1f',mu_re),'.mat'));
     S_til=fS_til.S_til;
-    S0_KKT_coupled_regularization_refitted=S_til(:,:,1);
-    S1_KKT_coupled_regularization_refitted=S_til(:,:,2);
-    S2_KKT_coupled_regularization_refitted=S_til(:,:,3);
+    S0_refitted=S_til(:,:,1);
+    S1_refitted=S_til(:,:,2);
+    S2_refitted=S_til(:,:,3);
 end
     
 % Calcul de la métrique de précision : distance entre
@@ -23,7 +23,7 @@ error_SV=0.0;
 for i=1:M
     for j=1:N
         Sgt=[real_S0(i,j);real_S1(i,j);real_S2(i,j)];
-        S_star=[S0_KKT_coupled_regularization(i,j);S1_KKT_coupled_regularization(i,j);S2_KKT_coupled_regularization(i,j)];
+        S_star=[S0(i,j);S1(i,j);S2(i,j)];
         error_SV=error_SV+(norm(Sgt-S_star,2)*norm(Sgt-S_star,2))/(norm(Sgt,2)*norm(Sgt,2));
         
     end
@@ -37,7 +37,7 @@ if refitting == true
     for i=1:M
         for j=1:N
             Sgt=[real_S0(i,j);real_S1(i,j);real_S2(i,j)];
-            S_star_refitted=[S0_KKT_coupled_regularization_refitted(i,j);S1_KKT_coupled_regularization_refitted(i,j);S2_KKT_coupled_regularization_refitted(i,j)];
+            S_star_refitted=[S0_refitted(i,j);S1_refitted(i,j);S2_refitted(i,j)];
             error_SV_refitted=error_SV_refitted+(norm(Sgt-S_star_refitted,2)*norm(Sgt-S_star_refitted,2))/(norm(Sgt,2)*norm(Sgt,2));
 
         end
@@ -49,7 +49,7 @@ end
 % S reconstruit biaisé
 for i=1:M
     for j=1:N
-        I_recovered=A*[S0_KKT_coupled_regularization(i,j);S1_KKT_coupled_regularization(i,j);S2_KKT_coupled_regularization(i,j)];
+        I_recovered=A*[S0(i,j);S1(i,j);S2(i,j)];
         I0_recovered(i,j)=I_recovered(1);
         I90_recovered(i,j)=I_recovered(2);
         I45_recovered(i,j)=I_recovered(3);
@@ -73,7 +73,7 @@ if refitting == true
     % S reconstruit débiaisé
     for i=1:M
         for j=1:N
-            I_recovered_refitted=A*[S0_KKT_coupled_regularization_refitted(i,j);S1_KKT_coupled_regularization_refitted(i,j);S2_KKT_coupled_regularization_refitted(i,j)];
+            I_recovered_refitted=A*[S0_refitted(i,j);S1_refitted(i,j);S2_refitted(i,j)];
             I0_recovered_refitted(i,j)=I_recovered_refitted(1);
             I90_recovered_refitted(i,j)=I_recovered_refitted(2);
             I45_recovered_refitted(i,j)=I_recovered_refitted(3);

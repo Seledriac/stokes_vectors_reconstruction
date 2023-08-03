@@ -34,7 +34,7 @@ tic
 for k=1:Nb_iter_max
     
     % Ex�cution de l'it�ration
-    S_new_hat=gma_iteration(S_hat,M,N,MN,tau_bi,mu_bi,b);
+    S_new_hat=gma_iteration_bi(S_hat,M,N,MN,tau_bi,mu_bi,b);
     
     % Accélération de la convergence en continuant dans la direction
     % donnée par la mise à jour de S_hat

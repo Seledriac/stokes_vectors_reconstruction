@@ -8,8 +8,8 @@ model_2 = 'cm_r';
 mu_bi_1 = 1.0;
 mu_re_1 = 1.0;
 mu_bi_2 = 1.0;
-mu_re_2 = 1.0;
-data_source='hands';
+mu_re_2 = 2.0;
+data_source='hazy_road';
 
 
 % RÃ©cupÃ©ration de l'image polarimétrique
@@ -118,31 +118,62 @@ for i=1:M
     end
 end
 
-% figure 1, image polarimÃ©trique : d'origine VS reconstruite
-% par le modèle 1 VS reconstruite par le modèle 2, 4x4
-c_min=min([min(min(I0)), min(min(I90)), min(min(I45)), min(min(I135)), min(min(I0_recovered_model_1)), min(min(I90_recovered_model_1)), min(min(I45_recovered_model_1)), min(min(I135_recovered_model_1)), min(min(I0_recovered_model_2)), min(min(I90_recovered_model_2)), min(min(I45_recovered_model_2)), min(min(I135_recovered_model_2))]);
-c_max=max([max(max(I0)), max(max(I90)), max(max(I45)), max(max(I135)), max(max(I0_recovered_model_1)), max(max(I90_recovered_model_1)), max(max(I45_recovered_model_1)), max(max(I135_recovered_model_1)), max(max(I0_recovered_model_2)), max(max(I90_recovered_model_2)), max(max(I45_recovered_model_2)), max(max(I135_recovered_model_2))]);
+
+% figure 1, I0 : d'origine VS reconstruit
+% par le modèle 1 VS reconstruit par le modèle 2, 1x3
+c_min=min([min(min(I0)), min(min(I0_recovered_model_1)), min(min(I0_recovered_model_2))]);
+c_max=max([max(max(I0)), max(max(I0_recovered_model_1)), max(max(I0_recovered_model_2))]);
 figure;
-subplot(341),imshow(I0,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(342),imshow(I90,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(343),imshow(I45,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(344),imshow(I135,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(345),imshow(I0_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,6),imshow(I90_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,7),imshow(I45_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,8),imshow(I135_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,9),imshow(I0_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,10),imshow(I90_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,11),imshow(I45_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-subplot(3,4,12),imshow(I135_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-% print -dpng strcat(data_source,'_radiance_images_comparison.png');
+subplot(131),imshow(I0,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(132),imshow(I0_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(133),imshow(I0_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+sgtitle('I0 : original VS model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_I0_comparison.png');
 
-% Changement de colormap
-m=1000;
-cm_inferno=inferno(m);
-colormap(inferno);
 
-% figure 2, DOLP : modèle 1 VS modèle 2
+% figure 2, I90 : d'origine VS reconstruit
+% par le modèle 1 VS reconstruit par le modèle 2, 1x3
+c_min=min([min(min(I90)), min(min(I90_recovered_model_1)), min(min(I90_recovered_model_2))]);
+c_max=max([max(max(I90)), max(max(I90_recovered_model_1)), max(max(I90_recovered_model_2))]);
+figure;
+subplot(131),imshow(I90,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(132),imshow(I90_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(133),imshow(I90_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+sgtitle('I90 : original VS model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_I90_comparison.png');
+
+
+% figure 3, I45 : d'origine VS reconstruit
+% par le modèle 1 VS reconstruit par le modèle 2, 1x3
+c_min=min([min(min(I45)), min(min(I45_recovered_model_1)), min(min(I45_recovered_model_2))]);
+c_max=max([max(max(I45)), max(max(I45_recovered_model_1)), max(max(I45_recovered_model_2))]);
+figure;
+subplot(131),imshow(I45,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(132),imshow(I45_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(133),imshow(I45_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+sgtitle('I45 : original VS model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_I45_comparison.png');
+
+
+% figure 4, I135 : d'origine VS reconstruit
+% par le modèle 1 VS reconstruit par le modèle 2, 1x3
+c_min=min([min(min(I135)), min(min(I135_recovered_model_1)), min(min(I135_recovered_model_2))]);
+c_max=max([max(max(I135)), max(max(I135_recovered_model_1)), max(max(I135_recovered_model_2))]);
+figure;
+subplot(131),imshow(I135,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(132),imshow(I135_recovered_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+subplot(133),imshow(I135_recovered_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+sgtitle('I135 : original VS model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_I135_comparison.png');
+
+
+% % Changement de colormap
+% m=1000;
+% cm_inferno=inferno(m);
+% colormap(inferno);
+
+
+% figure 5, DOLP : modèle 1 VS modèle 2, 1x2
 figure;
 dolp_model_1 = sqrt(S1_model_1.^2+S2_model_1.^2)./S0_model_1;
 dolp_model_2 = sqrt(S1_model_2.^2+S2_model_2.^2)./S0_model_2;
@@ -150,9 +181,11 @@ c_min = min([min(min(dolp_model_1)),min(min(dolp_model_2))]);
 c_max = max([max(max(dolp_model_1)),max(max(dolp_model_2))]);
 subplot(121),imagesc(dolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
 subplot(122),imagesc(dolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-% print -dpng strcat(data_source,'_dolp_comparison.png');
+sgtitle('DOLP : model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_dolp_comparison.png');
 
-% figure 3, AOLP : modèle 1 VS modèle 2
+
+% figure 6, AOLP : modèle 1 VS modèle 2, 1x2
 figure;
 aolp_model_1 = 0.5*atan2(S2_model_1,S1_model_1);
 aolp_model_2 = 0.5*atan2(S2_model_2,S1_model_2);
@@ -160,4 +193,5 @@ c_min = min([min(min(aolp_model_1)),min(min(aolp_model_2))]);
 c_max = max([max(max(aolp_model_1)),max(max(aolp_model_2))]);
 subplot(121),imagesc(aolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
 subplot(122),imagesc(aolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-% print -dpng strcat(data_source,'_aolp_comparison.png');
+sgtitle('AOLP : model 1 VS model 2');
+% print -dpng strcat(model_1,'_',model_2,'_',data_source,'_aolp_comparison.png');

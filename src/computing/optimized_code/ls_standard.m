@@ -29,7 +29,7 @@ tic
 
 % Calcul de A_tilde, pseudo-inverse de A
 A=(1/2)*[1 1 0;1 -1 0;1 0 1;1 0 -1];
-A_tilde = (A^t * A)^-1 * A^t;
+A_tilde = (A' * A)^-1 * A';
 
 % reshape de I
 I = [I0(:)';I90(:)';I45(:)';I135(:)'];

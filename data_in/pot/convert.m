@@ -4,6 +4,7 @@ clc
 I=imread('radiance_image.tiff');
 
 I=double(I);
+I=I/(max(max(I)));
 
 I45=I(1:2:end,1:2:end);
 I135=I(2:2:end,2:2:end);

@@ -18,15 +18,23 @@ M=size(I0,1);
 N=size(I0,2);
 MN = M*N;
 
-% variables primales
+% variables primales, problème à solution biaisée
 S_hat=zeros(M,N,3);
 S_new_hat=zeros(M,N,3);
 S_bar_hat=S_hat;
 
-% variables duales
+% variables primales, problème de refitting
+S_til=zeros(M,N,3);
+S_new_til=zeros(M,N,3);
+S_bar_til=S_til;
+
+% variables duales, problème à solution biaisée
 p_hat=zeros(M,N,6);
 
-% paramÃ¨tres A et b pour le prox de S_hat
+% variables duales, problème de refitting
+p_til=zeros(M,N,6);
+
+% paramètres A et b pour le prox de S_hat et S_til
 A=(1/2)*[1 1 0;1 -1 0;1 0 1;1 0 -1];
 b=A'*[I0(:)';I90(:)';I45(:)';I135(:)'];
 
