@@ -1,23 +1,31 @@
 
 % Solution biaisée du mod�le appliqué à
 % l'image polarimétrique d'entrée I
-fS_hat=matfile(strcat('../../data_out/',model,'/shepp_logan_phantom/S_hat_mu_bi_',sprintf('%.1f',mu_bi),'.mat'));
+if(strcmp(model,'ls'))
+    fS_hat=matfile(strcat('../../data_out/ls/shepp_logan_phantom/S_hat.mat'));
+else
+    fS_hat=matfile(strcat('../../data_out/',model,'/shepp_logan_phantom/S_hat_mu_bi_',sprintf('%.1f',mu_bi),'.mat'));
+end
 S_hat=fS_hat.S_hat;
 S0=S_hat(:,:,1);
 S1=S_hat(:,:,2);
 S2=S_hat(:,:,3);
 
 if refitting == true
-    % Solution débiaisée du mod�le appliqué à
+    % Solution débiaisée du mod�le appliqué �
     % l'image polarimétrique d'entrée I
-    fS_til=matfile(strcat('../../data_out/',model,'/shepp_logan_phantom/S_til_mu_bi_',sprintf('%.1f',mu_bi),'_mu_re_',sprintf('%.1f',mu_re),'.mat'));
+    if(strcmp(model,'ls'))
+        fS_til=matfile(strcat('../../data_out/',model,'/shepp_logan_phantom/S_til_mu_re_',sprintf('%.1f',mu_re),'.mat'));
+    else
+        fS_til=matfile(strcat('../../data_out/',model,'/shepp_logan_phantom/S_til_mu_bi_',sprintf('%.1f',mu_bi),'_mu_re_',sprintf('%.1f',mu_re),'.mat'));
+    end   
     S_til=fS_til.S_til;
     S0_refitted=S_til(:,:,1);
     S1_refitted=S_til(:,:,2);
     S2_refitted=S_til(:,:,3);
 end
-    
-% Reconstruction de l'image polarimétrique à partir du
+
+% Reconstruction de l'image polarimétrique de synthèse à partir du
 % S reconstruit biaisé
 for i=1:M
     for j=1:N
@@ -41,7 +49,7 @@ ssim(I4,I135_recovered)
 ];
 
 if refitting == true
-    % Reconstruction de l'image polarimétrique à partir du
+    % Reconstruction de l'image polarimétrique de synthèse à partir du
     % S reconstruit débiaisé
     for i=1:M
         for j=1:N

@@ -17,21 +17,21 @@ theta_bi=1.0; % paramètre CP itération biaisée, reste à 1.0
 theta_re=1.0; % paramètre CP itération refitting, reste à 1.0
 
 % à faire varier
-mu_bi_r=1:0.1:1.2; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
-mu_re_r=1:0.1:1.2; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
+mu_bi_r=5.0:1.0:5.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
+mu_re_r=1.0:1.0:100.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
 
 % flags
-refitting = true;
-hands = true;
-hazy_road = true;
-key_ball_rubber = true;
-mug = true;
-mug_cafe = true;
-pot = true;
-road_experiment = true;
-shepp_logan_phantom = true;
+refitting = false;
+hands = false;
+hazy_road = false;
+key_ball_rubber = false;
+mug = false;
+mug_cafe = false;
+pot = false;
+road_experiment = false;
+shepp_logan_phantom = false;
 synthetic = true;
-various_objects = true;
+various_objects = false;
 
 
 % ########## CALCUL #########
