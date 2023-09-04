@@ -6,7 +6,7 @@ clc;
 % ###### PARAMETRES #####
 
 % fixés
-Nb_iter_max=1000;
+Nb_iter_max=100;
 gamma_bi=1.0; % poids des TV dans la fonctionnelle du problème à solution biaisée, reste à 1
 gamma_re=1.0; % poids de phi_SD dans la fonctionnelle du problème de refitting, reste à 1
 sigma_bi=0.3; % paramètre CP itération biaisée, reste à 0.3
@@ -17,21 +17,21 @@ theta_bi=1.0; % paramètre CP itération biaisée, reste à 1.0
 theta_re=1.0; % paramètre CP itération refitting, reste à 1.0
 
 % à faire varier
-mu_bi_r=5.0:1.0:5.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
-mu_re_r=1.0:1.0:100.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
+mu_bi_r=31.0:10.0:101.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
+mu_re_r=1.0:10.0:101.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
 
 % flags
-refitting = false;
-hands = false;
-hazy_road = false;
-key_ball_rubber = false;
-mug = false;
-mug_cafe = false;
-pot = false;
-road_experiment = false;
+refitting = true;
+hands = true;
+hazy_road = true;
+key_ball_rubber = true;
+mug = true;
+mug_cafe = true;
+pot = true;
+road_experiment = true;
 shepp_logan_phantom = false;
-synthetic = true;
-various_objects = false;
+synthetic = false;
+various_objects = true;
 
 
 % ########## CALCUL #########

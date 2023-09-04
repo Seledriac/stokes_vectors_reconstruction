@@ -3,13 +3,13 @@ close all;
 
 
 % flags
-model_1 = 'cm';
-mu_bi_1 = 5.0;
-% mu_re_1 = 1.5;
+model_1 = 'dm';
+mu_bi_1 = 3.0;
+% mu_re_1 = 1.0;
 fmodel_2 = true;
 if(fmodel_2)
-    model_2 = 'dm';
-    mu_bi_2 = 5.0;
+    model_2 = 'dm_r';
+    mu_bi_2 = 4.5;
     mu_re_2 = 1.0;
 end
 
@@ -76,28 +76,28 @@ S2_model_1=S_model_1(:,:,3);
 % Pour le modèle 2
 if(fmodel_2)
     if ( strcmp(model_2,'cm') )
-        fS_hat=matfile(strcat('../../data_out/cm/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_1),'.mat'));
+        fS_hat=matfile(strcat('../../data_out/cm/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_2),'.mat'));
         S_model_2=fS_hat.S_hat;
     elseif ( strcmp(model_2,'cm_r') )
-        fS_til=matfile(strcat('../../data_out/cm/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_1),'_mu_re_',sprintf('%.1f',mu_re_1),'.mat'));
+        fS_til=matfile(strcat('../../data_out/cm/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_2),'_mu_re_',sprintf('%.1f',mu_re_2),'.mat'));
         S_model_2=fS_til.S_til;
     elseif ( strcmp(model_2,'dm') )
-        fS_hat=matfile(strcat('../../data_out/dm/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_1),'.mat'));
+        fS_hat=matfile(strcat('../../data_out/dm/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_2),'.mat'));
         S_model_2=fS_hat.S_hat;
     elseif ( strcmp(model_2,'dm_r') )
-        fS_til=matfile(strcat('../../data_out/dm/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_1),'_mu_re_',sprintf('%.1f',mu_re_1),'.mat'));
+        fS_til=matfile(strcat('../../data_out/dm/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_2),'_mu_re_',sprintf('%.1f',mu_re_2),'.mat'));
         S_model_2=fS_til.S_til;
     elseif ( strcmp(model_2,'gma') )
-        fS_hat=matfile(strcat('../../data_out/gma/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_1),'.mat'));
+        fS_hat=matfile(strcat('../../data_out/gma/synthetic/S_hat_mu_bi_',sprintf('%.1f',mu_bi_2),'.mat'));
         S_model_2=fS_hat.S_hat;
     elseif ( strcmp(model_2,'gma_r') )
-        fS_til=matfile(strcat('../../data_out/gma/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_1),'_mu_re_',sprintf('%.1f',mu_re_1),'.mat'));
+        fS_til=matfile(strcat('../../data_out/gma/synthetic/S_til_mu_bi_',sprintf('%.1f',mu_bi_2),'_mu_re_',sprintf('%.1f',mu_re_2),'.mat'));
         S_model_2=fS_til.S_til;
     elseif ( strcmp(model_2,'ls') )
         fS_hat=matfile(strcat('../../data_out/ls/synthetic/S_hat.mat'));
         S_model_2=fS_hat.S_hat;
     elseif ( strcmp(model_2,'ls_r') )
-        fS_til=matfile(strcat('../../data_out/ls/synthetic/S_til_mu_re_',sprintf('%.1f',mu_re_1),'.mat'));
+        fS_til=matfile(strcat('../../data_out/ls/synthetic/S_til_mu_re_',sprintf('%.1f',mu_re_2),'.mat'));
         S_model_2=fS_til.S_til;
     end
     S0_model_2=S_model_2(:,:,1);
@@ -210,15 +210,17 @@ if(fmodel_2)
     
     
     % figure 5, DOLP : S d'origine VS modèle 1 VS modèle 2, 1x3
+    m=100;
+    cm_inferno=inferno(m);
     t = tiledlayout(1,3,'TileSpacing','Compact','Padding','Compact');
     dolp_real = sqrt(real_S1.^2+real_S2.^2)./real_S0;
     dolp_model_1 = sqrt(S1_model_1.^2+S2_model_1.^2)./S0_model_1;
     dolp_model_2 = sqrt(S1_model_2.^2+S2_model_2.^2)./S0_model_2;
     c_min = min([min(min(dolp_real)),min(min(dolp_model_1)),min(min(dolp_model_2))]);
     c_max = max([max(max(dolp_real)),max(max(dolp_model_1)),max(max(dolp_model_2))]);
-    nexttile,imagesc(dolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(dolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(dolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+    nexttile,imagesc(dolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap('inferno');
+    nexttile,imagesc(dolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap('inferno');
+    nexttile,imagesc(dolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap('inferno');
     set(gcf, 'Position', get(0, 'Screensize'));
 %     sgtitle('DOLP : original VS model 1 VS model 2');
     filename = fullfile('../../figures/',strcat(model_1,'_',model_2,'_synthetic_data_dolp_comparison.png'));
@@ -226,19 +228,21 @@ if(fmodel_2)
     
     
     % figure 6, AOLP : S d'origine VS modèle 1 VS modèle 2, 1x3
+    cmap = cmocean('phase');
     t = tiledlayout(1,3,'TileSpacing','Compact','Padding','Compact');
     aolp_real = 0.5*atan2(real_S2,real_S1);
     aolp_model_1 = 0.5*atan2(S2_model_1,S1_model_1);
     aolp_model_2 = 0.5*atan2(S2_model_2,S1_model_2);
     c_min = min([min(min(aolp_real)),min(min(aolp_model_1)),min(min(aolp_model_2))]);
     c_max = max([max(max(aolp_real)),max(max(aolp_model_1)),max(max(aolp_model_2))]);
-    nexttile,imagesc(aolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(aolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(aolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+    nexttile,imagesc(aolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap(cmap);
+    nexttile,imagesc(aolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap(cmap);
+    nexttile,imagesc(aolp_model_2,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap(cmap);
     set(gcf, 'Position', get(0, 'Screensize'));
 %     sgtitle('AOLP : original VS model 1 VS model 2');
     filename = fullfile('../../figures/',strcat(model_1,'_',model_2,'_synthetic_data_aolp_comparison.png'));
     exportgraphics(t,filename);
+    colormap('parula');
 
 
     % figure 7, I0 plot : I0 d'origine VS modèle 1 VS modèle 2, plot unique
@@ -327,13 +331,15 @@ else
     
     
     % figure 5, DOLP : S d'origine VS modèle 1, 1x2
+    m=100;
+    cm_inferno=inferno(m);
     t = tiledlayout(1,2,'TileSpacing','Compact','Padding','Compact');
     dolp_real = sqrt(real_S1.^2+real_S2.^2)./real_S0;
     dolp_model_1 = sqrt(S1_model_1.^2+S2_model_1.^2)./S0_model_1;
     c_min = min([min(min(dolp_real)),min(min(dolp_model_1))]);
     c_max = max([max(max(dolp_real)),max(max(dolp_model_1))]);
-    nexttile,imagesc(dolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(dolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+    nexttile,imagesc(dolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap('inferno');
+    nexttile,imagesc(dolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap('inferno');
 %     sgtitle('DOLP : original VS model 1 VS model 2');
     set(gcf, 'Position', get(0, 'Screensize'));
     filename = fullfile('../../figures/',strcat(model_1,'_synthetic_data_dolp_comparison.png'));
@@ -341,17 +347,19 @@ else
     
     
     % figure 6, AOLP : S d'origine VS modèle 1, 1x2
+    cmap = cmocean('phase');
     t = tiledlayout(1,2,'TileSpacing','Compact','Padding','Compact');
     aolp_real = 0.5*atan2(real_S2,real_S1);
     aolp_model_1 = 0.5*atan2(S2_model_1,S1_model_1);
     c_min = min([min(min(aolp_real)),min(min(aolp_model_1))]);
     c_max = max([max(max(aolp_real)),max(max(aolp_model_1))]);
-    nexttile,imagesc(aolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
-    nexttile,imagesc(aolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];
+    nexttile,imagesc(aolp_real,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap(cmap);
+    nexttile,imagesc(aolp_model_1,[c_min,c_max]);colorbar;axis off;caxis=[c_min,c_max];colormap(cmap);
 %     sgtitle('AOLP : original VS model 1');
     set(gcf, 'Position', get(0, 'Screensize'));
     filename = fullfile('../../figures/',strcat(model_1,'_synthetic_data_aolp_comparison.png'));
     exportgraphics(t,filename);
+    colormap('parula');
 
 
 end

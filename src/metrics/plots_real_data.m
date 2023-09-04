@@ -1,12 +1,12 @@
 % clear all;
-% close all;
-% clc;
+close all;
+%clc;
 
 
 % Paramètres
 A=(1/2)*[1 1 0;1 -1 0;1 0 1;1 0 -1];
-mu_bi_r=99.0:1.0:100.0;
-mu_re_r=1:0.1:2;
+mu_bi_r=1.0:10.0:101.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
+mu_re_r=1.0:10.0:101.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
 
 % metrics
 PSNR_arr=zeros(length(mu_bi_r),length(mu_re_r));
@@ -15,18 +15,18 @@ SSIM_arr=zeros(length(mu_bi_r),length(mu_re_r));
 SSIM_refitted_arr=zeros(length(mu_bi_r),length(mu_re_r));
 
 % flags
-refitting = false;
+refitting = true;
 % image polarimétrique, en choisir une à la fois
-hands = false;
+hands = true;
 hazy_road = false;
 key_ball_rubber = false;
 mug = false;
 mug_cafe = false;
 pot = false;
 road_experiment = false;
-various_objects = true;
+various_objects = false;
 
-model='ls';
+model='dm';
 
 if hands == true
     data_source_in = '../../data_in/hands/';

@@ -24,8 +24,8 @@ N=size(I1,2);
 % Paramètres
 A=(1/2)*[1 1 0;1 -1 0;1 0 1;1 0 -1];
 % à faire varier
-mu_bi_r=0.0:0.1:2.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
-mu_re_r=0.0:0.1:2.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
+mu_bi_r=0.0:0.5:10.0; % poids du terme d'attache aux données dans la fonctionnelle du problème à solution biaisée
+mu_re_r=0.0:0.5:10.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
 
 % metrics
 error_SV_arr=zeros(length(mu_bi_r),length(mu_re_r));
@@ -36,7 +36,7 @@ SSIM_arr=zeros(length(mu_bi_r),length(mu_re_r));
 SSIM_refitted_arr=zeros(length(mu_bi_r),length(mu_re_r));
 
 % flags
-refitting = false;
+refitting = true;
 
 % Modèle considéré
 model = 'ls';

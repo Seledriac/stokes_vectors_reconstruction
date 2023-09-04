@@ -6,7 +6,7 @@ clc;
 % ###### PARAMETRES #####
 
 % fixés
-Nb_iter_max=100;
+Nb_iter_max=1000;
 gamma_re=1.0; % poids de phi_SD dans la fonctionnelle du problème de refitting, reste à 1
 sigma_re=0.3; % paramètre CP itération refitting, reste à 0.3
 sigma_bi=sigma_re; % On pose cela car il n'y a que le refitting
@@ -14,20 +14,20 @@ tau_re=1.0/(8.0*2*sigma_re*gamma_re^2); % tau_re * sigma_re * gamma_re^2 = 1/16 
 theta_re=1.0; % paramètre CP itération refitting, reste à 1.0
 
 % à faire varier
-mu_re_r=1.0:1.0:100.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
+mu_re_r=100.0:1.0:100.0; % poids du terme d'attache aux données dans la fonctionnelle du problème de refitting
 
 % flags
-refitting = false;
+refitting = true;
 hands = true;
-hazy_road = true;
-key_ball_rubber = true;
-mug = true;
-mug_cafe = true;
+hazy_road = false;
+key_ball_rubber = false;
+mug = false;
+mug_cafe = false;
 pot = true;
-road_experiment = true;
+road_experiment = false;
 shepp_logan_phantom = false;
 synthetic = false;
-various_objects = true;
+various_objects = false;
 
 
 % ########## CALCUL #########

@@ -36,7 +36,7 @@ I = [I0(:)';I90(:)';I45(:)';I135(:)'];
 
 sol = zeros(1,3);
 for i=1:MN
-    sol = A_tilde * I(i);
+    sol = A_tilde * I(:,i);
     S0_hat(i) = sol(1);
     S1_hat(i) = sol(2);
     S2_hat(i) = sol(3);
